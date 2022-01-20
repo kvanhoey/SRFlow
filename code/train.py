@@ -268,7 +268,8 @@ def main():
                     if not os.path.isfile(save_img_path_lq):
                         lq_img = util.tensor2img(visuals['LQ'])  # uint8
                         util.save_img(
-                            cv2.resize(lq_img, dsize=None, fx=opt['scale'], fy=opt['scale'],
+                            #cv2.resize(lq_img, dsize=None, fx=opt['scale'], fy=opt['scale'],
+                            cv2.resize(lq_img, dsize=None, fx=1, fy=1,
                                        interpolation=cv2.INTER_NEAREST),
                             save_img_path_lq)
 
