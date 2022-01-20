@@ -136,6 +136,7 @@ class SRFlowModel(BaseModel):
     def optimize_parameters(self, step):
 
         train_RRDB_delay = opt_get(self.opt, ['network_G', 'train_RRDB_delay'])
+
         if train_RRDB_delay is not None and step > int(train_RRDB_delay * self.opt['train']['niter']) \
                 and not self.netG.module.RRDB_training:
             if self.netG.module.set_rrdb_training(True):
@@ -226,8 +227,10 @@ class SRFlowModel(BaseModel):
         if seed: torch.manual_seed(seed)
         if opt_get(self.opt, ['network_G', 'flow', 'split', 'enable']):
             C = self.netG.module.flowUpsamplerNet.C
-            H = int(self.opt['scale'] * lr_shape[2] // self.netG.module.flowUpsamplerNet.scaleH)
-            W = int(self.opt['scale'] * lr_shape[3] // self.netG.module.flowUpsamplerNet.scaleW)
+            #H = int(self.opt['scale'] * lr_shape[2] // self.netG.module.flowUpsamplerNet.scaleH)
+            #W = int(self.opt['scale'] * lr_shape[3] // self.netG.module.flowUpsamplerNet.scaleW)
+            H = int(1 * lr_shape[2] // self.netG.module.flowUpsamplerNet.scaleH)
+            W = int(1 * lr_shape[3] // self.netG.module.flowUpsamplerNet.scaleW)
             z = torch.normal(mean=0, std=heat, size=(batch_size, C, H, W)) if heat > 0 else torch.zeros(
                 (batch_size, C, H, W))
         else:

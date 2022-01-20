@@ -23,6 +23,7 @@ import pickle
 
 from natsort import natsort
 from tqdm import tqdm
+from imresize import imresize
 
 def get_img_paths(dir_path, wildcard='*.png'):
     return natsort.natsorted(glob.glob(dir_path + '/' + wildcard))
@@ -42,7 +43,8 @@ def to_pklv4(obj, path, vebose=False):
         print("Wrote {}".format(path))
 
 
-from imresize import imresize
+#from imresize import imresize
+import shadower
 
 def random_crop(img, size):
     h, w, c = img.shape
@@ -68,7 +70,6 @@ def to_pklv4_1pct(obj, path, vebose):
     path = path.replace(".", "_1pct.")
     to_pklv4(obj[:n], path, vebose=True)
 
-
 def main(dir_path):
     hrs = []
     lqs = []
@@ -79,9 +80,11 @@ def main(dir_path):
 
         for i in range(47):
             crop = random_crop(img, 160)
-            cropX4 = imresize(crop, scalar_scale=0.25)
+            cropX4 = shadower.add_shadow(imresize(crop, scalar_scale=0.25))
+            cropShadow = shadower.add_shadow(crop)
             hrs.append(crop)
-            lqs.append(cropX4)
+            # lqs.append(cropX4)
+            lqs.append(cropShadow)
 
     shuffle_combined(hrs, lqs)
 
@@ -104,8 +107,9 @@ def get_hrs_path(dir_path):
 def get_lqs_path(dir_path):
     base_dir = os.path.dirname(dir_path)
     name = os.path.basename(dir_path)
-    hrs_path = os.path.join(base_dir, 'pkls', name + '_X4.pklv4')
-    return hrs_path
+    # lqs_path = os.path.join(base_dir, 'pkls', name + '_X4.pklv4')
+    lqs_path = os.path.join(base_dir, 'pkls', name + '_shadow.pklv4')
+    return lqs_path
 
 
 def shuffle_combined(hrs, lqs):

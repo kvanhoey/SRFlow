@@ -68,7 +68,7 @@ class RRDBNet(nn.Module):
         RRDB_block_f = functools.partial(RRDB, nf=nf, gc=gc)
         self.scale = scale
 
-        self.conv_first = nn.Conv2d(in_nc, nf, 3, 1, 1, bias=True)
+        self.conv_first = nn.Conv2d(in_nc, nf, 3, 4, 1, bias=True) ## mod
         self.RRDB_trunk = mutil.make_layer(RRDB_block_f, nb)
         self.trunk_conv = nn.Conv2d(nf, nf, 3, 1, 1, bias=True)
         #### upsampling

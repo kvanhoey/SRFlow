@@ -15,7 +15,7 @@
 # This file contains content licensed by https://github.com/xinntao/BasicSR/blob/master/LICENSE/LICENSE
 
 #### general settings
-name: train
+name: train_SRFlow_DF2K_4X
 use_tb_logger: true
 model: SRFlow
 distortion: sr
@@ -25,7 +25,7 @@ gpu_ids: [ 0 ]
 #### datasets
 datasets:
   train:
-    name: CelebA_160_tr
+    name: SRFlow_DF2K_4X
     mode: LRHR_PKL
     dataroot_GT: ../datasets/DF2K-tr.pklv4
     dataroot_LQ: ../datasets/DF2K-tr_X4.pklv4
@@ -38,7 +38,7 @@ datasets:
     use_flip: true
     color: RGB
   val:
-    name: CelebA_160_va
+    name: SRFlow_DF2K_4X_va
     mode: LRHR_PKL
     dataroot_GT: ../datasets/DIV2K-va.pklv4
     dataroot_LQ: ../datasets/DIV2K-va_X4.pklv4

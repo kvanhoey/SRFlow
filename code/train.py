@@ -196,6 +196,7 @@ def main():
             except RuntimeError as e:
                 print("Skipping ERROR caught in nll = model.optimize_parameters(current_step): ")
                 print(e)
+                return
 
             if nll is None:
                 nll = 0
